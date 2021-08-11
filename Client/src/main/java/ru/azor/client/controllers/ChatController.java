@@ -5,9 +5,11 @@ import clientServer.commands.ClientMessageCommandData;
 import clientServer.commands.UpdateUsersListCommandData;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -21,8 +23,9 @@ import java.util.List;
 
 public class ChatController {
 
-    public Button reconnectButton;
     public Button sendButton;
+    public MenuItem reconnect;
+    public MenuItem changeNick;
     @FXML
     private ListView<String> usersList;
     @FXML
@@ -117,5 +120,9 @@ public class ChatController {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void changeUsername(ActionEvent actionEvent) {
+
     }
 }
