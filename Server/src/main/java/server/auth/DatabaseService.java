@@ -5,12 +5,10 @@ import java.sql.*;
 public class DatabaseService {
     private static final String DB_URL = "jdbc:sqlite:E:\\java\\ChatJavaFXMaven\\chat.db";
     private Connection connection;
-    private Statement statement;
 
     public DatabaseService() {
         try {
             connection = DriverManager.getConnection(DB_URL);
-            statement = connection.createStatement();
         } catch (SQLException e) {
             System.out.println("Failed to database connection");
         }
@@ -19,9 +17,12 @@ public class DatabaseService {
 
     public String getUsernameByLoginAndPassword(String login, String password) {
         String username = null;
-        String request = String.format("SELECT username FROM users WHERE login = '%s' AND password = '%s'", login, password);
+        String request = "SELECT username FROM users WHERE login = ? AND password = ?";
         try {
-            ResultSet resultSet = statement.executeQuery(request);
+            PreparedStatement preparedStatement = connection.prepareStatement(request);
+            preparedStatement.setString(1, login);
+            preparedStatement.setString(2, password);
+            ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 username = resultSet.getString("username");
             }
@@ -32,9 +33,13 @@ public class DatabaseService {
     }
 
     public void changeUsername(String newUsername, String login, String password) {
-        String request = String.format("UPDATE users SET username = '%s' WHERE login = '%s' AND password = '%s'", newUsername, login, password);
+        String request = "UPDATE users SET username = ? WHERE login = ? AND password = ?";
         try {
-            statement.executeUpdate(request);
+            PreparedStatement preparedStatement = connection.prepareStatement(request);
+            preparedStatement.setString(1, newUsername);
+            preparedStatement.setString(2, login);
+            preparedStatement.setString(3, password);
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Failed to database connection");
         }
