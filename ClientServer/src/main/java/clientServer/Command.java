@@ -66,5 +66,11 @@ public class Command implements Serializable {
         command.data = new UpdateUsersListCommandData(users);
         return command;
     }
+    public static Command updateDatabaseCommand(String newUsername, String login, String password) {
+        Command command = new Command();
+        command.type = CommandType.UPDATE_DATABASE;
+        command.data = new UpdateDatabaseCommandData(newUsername, login, password);
+        return command;
+    }
 
 }

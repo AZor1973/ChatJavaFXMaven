@@ -1,7 +1,7 @@
 package server;
 
 import clientServer.Command;
-import server.auth.AuthService;
+import server.auth.DatabaseService;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -12,18 +12,21 @@ import java.util.List;
 public class MyServer {
 
     private final List<ClientHandler> clients = new ArrayList<>();
-    private AuthService authService;
+    private DatabaseService databaseService;
 
     public void start(int port) {
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             System.out.println("Server has been started");
-            authService = new AuthService();
+            databaseService = new DatabaseService();
             while (true) {
                 waitAndProcessNewClientConnection(serverSocket);
             }
         } catch (IOException e) {
             System.err.println("Failed to bind port " + port);
             e.printStackTrace();
+        }
+        finally {
+            databaseService.closeConnection();
         }
     }
 
@@ -44,6 +47,7 @@ public class MyServer {
     }
 
     public synchronized void subscribe(ClientHandler clientHandler) throws IOException {
+        if (!clients.contains(clientHandler))
         clients.add(clientHandler);
         notifyClientsUsersListUpdated();
     }
@@ -53,8 +57,8 @@ public class MyServer {
         notifyClientsUsersListUpdated();
     }
 
-    public AuthService getAuthService() {
-        return authService;
+    public DatabaseService getAuthService() {
+        return databaseService;
     }
 
     public synchronized boolean isUsernameBusy(String username) {

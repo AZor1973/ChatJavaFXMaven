@@ -113,6 +113,10 @@ public class Network {
         sendCommand(Command.authCommand(login, password));
     }
 
+    public void sendNewUsername(String newUsername, String login, String password) throws IOException {
+        sendCommand(Command.updateDatabaseCommand(newUsername, login, password));
+    }
+
     private void sendCommand(Command command) throws IOException {
         try {
             socketOutput.writeObject(command);
