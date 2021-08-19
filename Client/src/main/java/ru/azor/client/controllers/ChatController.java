@@ -5,14 +5,11 @@ import clientServer.commands.ClientMessageCommandData;
 import clientServer.commands.UpdateUsersListCommandData;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import ru.azor.client.ClientChat;
 import ru.azor.client.dialogs.Dialogs;
 import ru.azor.client.model.Network;
 
@@ -23,9 +20,15 @@ import java.util.List;
 
 public class ChatController {
 
-    public Button sendButton;
-    public MenuItem reconnect;
-    public MenuItem changeNick;
+    @FXML
+    private Button sendButton;
+    @FXML
+    private MenuItem reconnect;
+    @FXML
+    private MenuItem changeNick;
+    @FXML
+    private TextField newNick;
+
     @FXML
     private ListView<String> usersList;
     @FXML
@@ -47,7 +50,6 @@ public class ChatController {
         if (!usersList.getSelectionModel().isEmpty()) {
             recipient = usersList.getSelectionModel().getSelectedItem();
         }
-
         try {
             if (recipient != null) {
                 Network.getInstance().sendPrivateMessage(recipient, message);
@@ -122,7 +124,15 @@ public class ChatController {
         this.password = password;
     }
 
-    public void changeUsername(ActionEvent actionEvent) {
-
+    public void changeUsername() {
+        Network network = Network.getInstance();
+        String nick = newNick.getText();
+        try {
+            network.sendNewUsername(nick, login, password);
+        } catch (IOException e) {
+            Dialogs.NetworkError.SEND_MESSAGE.show();
+            e.printStackTrace();
+        }
+        ClientChat.INSTANCE.getPrimaryStage().setTitle(nick);
     }
 }

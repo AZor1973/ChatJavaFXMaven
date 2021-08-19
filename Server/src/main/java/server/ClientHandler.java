@@ -5,6 +5,7 @@ import clientServer.CommandType;
 import clientServer.commands.AuthCommandData;
 import clientServer.commands.PrivateMessageCommandData;
 import clientServer.commands.PublicMessageCommandData;
+import clientServer.commands.UpdateDatabaseCommandData;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -112,6 +113,9 @@ public class ClientHandler {
                 case PRIVATE_MESSAGE: {
                     PrivateMessageCommandData data = (PrivateMessageCommandData) command.getData();
                     String recipient = data.getReceiver();
+                    if (recipient.equals(this.username)){
+                       processMessage(data.getMessage());
+                    }
                     String privateMessage = data.getMessage();
                     server.sendPrivateMessage(this, recipient, privateMessage);
                     break;
@@ -119,6 +123,14 @@ public class ClientHandler {
                 case PUBLIC_MESSAGE: {
                     PublicMessageCommandData data = (PublicMessageCommandData) command.getData();
                     processMessage(data.getMessage());
+                    break;
+                }
+                case UPDATE_DATABASE: {
+                    UpdateDatabaseCommandData data = (UpdateDatabaseCommandData) command.getData();
+                    server.getAuthService().changeUsername(data.getNewUsername(), data.getLogin(), data.getPassword());
+                   this.username = data.getNewUsername();
+                   server.subscribe(this);
+                   break;
                 }
             }
         }
