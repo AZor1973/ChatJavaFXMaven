@@ -1,9 +1,12 @@
 package clientServer.commands;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 public class ClientMessageCommandData implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = 1669929777800146767L;
     private final String sender;
     private final String message;
 

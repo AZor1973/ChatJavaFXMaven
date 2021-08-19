@@ -113,6 +113,9 @@ public class ClientHandler {
                 case PRIVATE_MESSAGE: {
                     PrivateMessageCommandData data = (PrivateMessageCommandData) command.getData();
                     String recipient = data.getReceiver();
+                    if (recipient.equals(this.username)){
+                       processMessage(data.getMessage());
+                    }
                     String privateMessage = data.getMessage();
                     server.sendPrivateMessage(this, recipient, privateMessage);
                     break;

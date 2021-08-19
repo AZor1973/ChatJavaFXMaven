@@ -63,7 +63,13 @@ public class AuthController {
                 AuthOkCommandData data = (AuthOkCommandData) command.getData();
                 String username = data.getUsername();
                 Platform.runLater(() -> ClientChat.INSTANCE.switchToMainChatWindow(username));
-            } else {
+            }
+//            else if (command.getType() == CommandType.ERROR) {
+//                ErrorCommandData data = (ErrorCommandData) command.getData();
+//                System.out.println(data.getErrorMessage());
+//                Platform.runLater(() -> new Alert(Alert.AlertType.ERROR, data.getErrorMessage()).showAndWait());
+//            }
+            else {
                 Platform.runLater(Dialogs.AuthError.INVALID_CREDENTIALS::show);
             }
         });
