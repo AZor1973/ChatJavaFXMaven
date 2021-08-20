@@ -11,6 +11,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import ru.azor.client.ClientChat;
 import ru.azor.client.dialogs.Dialogs;
+import ru.azor.client.history.HistoryService;
 import ru.azor.client.model.Network;
 
 import java.io.IOException;
@@ -19,7 +20,7 @@ import java.util.Date;
 import java.util.List;
 
 public class ChatController {
-
+    private static final int LAST_HISTORY_ROWS_NUMBER = 100;
     @FXML
     private Button sendButton;
     @FXML
@@ -37,6 +38,7 @@ public class ChatController {
     private TextArea messageTextArea;
     private String login;
     private String password;
+    private HistoryService historyService;
 
     @FXML
     private void sendMessage() {
@@ -63,6 +65,7 @@ public class ChatController {
     }
 
     private void appendMessageToChat(String sender, String message) {
+        String curMessage = chatHistory.getText();
         chatHistory.appendText(DateFormat.getDateTimeInstance().format(new Date()));
         chatHistory.appendText(System.lineSeparator());
         if (sender != null) {
@@ -73,6 +76,8 @@ public class ChatController {
         chatHistory.appendText(System.lineSeparator());
         chatHistory.appendText(System.lineSeparator());
         messageTextArea.clear();
+        String newMessage = chatHistory.getText(curMessage.length(), chatHistory.getLength());
+        historyService.keepText(newMessage);
     }
 
     @FXML
@@ -89,6 +94,11 @@ public class ChatController {
 
     public void initMessageHandler() {
         Network.getInstance().addReadMessageListener(command -> {
+            if (historyService == null){
+                historyService = new HistoryService(login);
+                historyService.keepHistory();
+                chatHistory.setText(historyService.loadLastRows2(LAST_HISTORY_ROWS_NUMBER));
+            }
             if (command.getType() == CommandType.CLIENT_MESSAGE) {
                 ClientMessageCommandData data = (ClientMessageCommandData) command.getData();
                 Platform.runLater(() -> ChatController.this.appendMessageToChat(data.getSender(), data.getMessage()));
@@ -134,5 +144,10 @@ public class ChatController {
             e.printStackTrace();
         }
         ClientChat.INSTANCE.getPrimaryStage().setTitle(nick);
+    }
+
+    public void closeWriter(){
+        if (historyService != null)
+        historyService.close();
     }
 }
