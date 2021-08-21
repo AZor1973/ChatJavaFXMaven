@@ -2,8 +2,10 @@ package ru.azor.client.controllers;
 
 import clientServer.CommandType;
 import clientServer.commands.AuthOkCommandData;
+import clientServer.commands.ErrorCommandData;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -64,11 +66,11 @@ public class AuthController {
                 String username = data.getUsername();
                 Platform.runLater(() -> ClientChat.INSTANCE.switchToMainChatWindow(username));
             }
-//            else if (command.getType() == CommandType.ERROR) {
-//                ErrorCommandData data = (ErrorCommandData) command.getData();
-//                System.out.println(data.getErrorMessage());
-//                Platform.runLater(() -> new Alert(Alert.AlertType.ERROR, data.getErrorMessage()).showAndWait());
-//            }
+            else if (command.getType() == CommandType.ERROR) {
+                ErrorCommandData data = (ErrorCommandData) command.getData();
+                System.out.println(data.getErrorMessage());
+                Platform.runLater(() -> new Alert(Alert.AlertType.ERROR, data.getErrorMessage()).showAndWait());
+            }
             else {
                 Platform.runLater(Dialogs.AuthError.INVALID_CREDENTIALS::show);
             }
