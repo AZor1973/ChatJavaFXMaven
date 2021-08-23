@@ -30,8 +30,8 @@ public class ClientHandler {
     public void handle() throws IOException {
         inputStream = new ObjectInputStream(clientSocket.getInputStream());
         outputStream = new ObjectOutputStream(clientSocket.getOutputStream());
-
-        new Thread(() -> {
+        Runnable runnable = () -> {
+            System.out.println(Thread.currentThread().getName());
             try {
                 authentication();
                 readMessages();
@@ -44,7 +44,8 @@ public class ClientHandler {
                     System.err.println("Failed to close connection");
                 }
             }
-        }).start();
+        };
+        server.getExecutorService().execute(runnable);
     }
 
     private void authentication() throws IOException {
