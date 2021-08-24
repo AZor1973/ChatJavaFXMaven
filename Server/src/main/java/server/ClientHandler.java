@@ -30,7 +30,8 @@ public class ClientHandler {
     public void handle() throws IOException {
         inputStream = new ObjectInputStream(clientSocket.getInputStream());
         outputStream = new ObjectOutputStream(clientSocket.getOutputStream());
-        new Thread(() -> {
+        Runnable runnable = () -> {
+            System.out.println(Thread.currentThread().getName());
             try {
                 authentication();
                 readMessages();
@@ -43,7 +44,8 @@ public class ClientHandler {
                     System.err.println("Failed to close connection");
                 }
             }
-        }).start();
+        };
+        server.getExecutorService().execute(runnable);
     }
 
     private void authentication() throws IOException {
@@ -112,7 +114,7 @@ public class ClientHandler {
                 case PRIVATE_MESSAGE: {
                     PrivateMessageCommandData data = (PrivateMessageCommandData) command.getData();
                     String recipient = data.getReceiver();
-                    if (recipient.equals(this.username)) {
+                    if (recipient.equals(this.username)){
                         processMessage(data.getMessage());
                     }
                     String privateMessage = data.getMessage();
