@@ -30,8 +30,7 @@ public class ClientHandler {
     public void handle() throws IOException {
         inputStream = new ObjectInputStream(clientSocket.getInputStream());
         outputStream = new ObjectOutputStream(clientSocket.getOutputStream());
-        Runnable runnable = () -> {
-            System.out.println(Thread.currentThread().getName());
+        new Thread(() -> {
             try {
                 authentication();
                 readMessages();
@@ -44,8 +43,7 @@ public class ClientHandler {
                     System.err.println("Failed to close connection");
                 }
             }
-        };
-        server.getExecutorService().execute(runnable);
+        }).start();
     }
 
     private void authentication() throws IOException {
@@ -114,8 +112,8 @@ public class ClientHandler {
                 case PRIVATE_MESSAGE: {
                     PrivateMessageCommandData data = (PrivateMessageCommandData) command.getData();
                     String recipient = data.getReceiver();
-                    if (recipient.equals(this.username)){
-                       processMessage(data.getMessage());
+                    if (recipient.equals(this.username)) {
+                        processMessage(data.getMessage());
                     }
                     String privateMessage = data.getMessage();
                     server.sendPrivateMessage(this, recipient, privateMessage);
@@ -129,9 +127,9 @@ public class ClientHandler {
                 case UPDATE_DATABASE: {
                     UpdateDatabaseCommandData data = (UpdateDatabaseCommandData) command.getData();
                     server.getAuthService().changeUsername(data.getNewUsername(), data.getLogin(), data.getPassword());
-                   this.username = data.getNewUsername();
-                   server.subscribe(this);
-                   break;
+                    this.username = data.getNewUsername();
+                    server.subscribe(this);
+                    break;
                 }
             }
         }
