@@ -67,7 +67,7 @@ public class Network {
     }
 
     private void startReadMessageProcess() {
-        Runnable runnable = () -> {
+        executorService.execute ( () -> {
             System.out.println(Thread.currentThread().getName());
             while (true) {
                 try {
@@ -87,8 +87,7 @@ public class Network {
                     break;
                 }
             }
-        };
-        executorService.execute(runnable);
+        });
     }
 
     private Command readCommand() throws IOException {
