@@ -37,7 +37,6 @@ public class ClientChat extends Application {
         getChatStage().show();
         getAuthStage().show();
         getAuthController().initMessageHandler();
-        primaryStage.setOnCloseRequest(we -> getChatController().closeWriter());
     }
 
     public Stage getPrimaryStage() {
@@ -114,9 +113,9 @@ public class ClientChat extends Application {
         getAuthController().close();
         getAuthStage().close();
     }
-//
-//    @Override
-//    public void stop() {
-//       getChatController().closeWriter();
-//    }
+
+    @Override
+    public void stop() {
+       getChatController().closeWriter();
+    }
 }
