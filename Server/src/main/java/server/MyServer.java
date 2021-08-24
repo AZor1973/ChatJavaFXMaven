@@ -8,16 +8,20 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class MyServer {
 
     private final List<ClientHandler> clients = new ArrayList<>();
     private DatabaseService databaseService;
+    private ExecutorService executorService;
 
     public void start(int port) {
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             System.out.println("Server has been started");
             databaseService = new DatabaseService();
+            executorService = Executors.newCachedThreadPool();
             while (true) {
                 waitAndProcessNewClientConnection(serverSocket);
             }
@@ -27,6 +31,7 @@ public class MyServer {
         }
         finally {
             databaseService.closeConnection();
+            executorService.shutdown();
         }
     }
 
@@ -89,5 +94,9 @@ public class MyServer {
             client.sendCommand(Command.updateUsersListCommand(users));
         }
 
+    }
+
+    public ExecutorService getExecutorService() {
+        return executorService;
     }
 }
