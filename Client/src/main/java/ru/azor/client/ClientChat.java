@@ -10,6 +10,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import ru.azor.client.controllers.AuthController;
 import ru.azor.client.controllers.ChatController;
+import ru.azor.client.model.Network;
 
 import java.io.IOException;
 
@@ -116,6 +117,7 @@ public class ClientChat extends Application {
 
     @Override
     public void stop() {
-       getChatController().closeWriter();
+        getChatController().closeWriter();
+        Network.getInstance().close();
     }
 }

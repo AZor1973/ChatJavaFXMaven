@@ -8,6 +8,8 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Network {
 
@@ -21,9 +23,8 @@ public class Network {
     private Socket socket;
     private ObjectInputStream socketInput;
     private ObjectOutputStream socketOutput;
-
+    private ExecutorService executorService;
     private final List<ReadCommandListener> listeners = new CopyOnWriteArrayList<>();
-    private Thread readMessageProcess;
     private boolean connected;
 
 
@@ -50,7 +51,8 @@ public class Network {
             socket = new Socket(host, port);
             socketOutput = new ObjectOutputStream(socket.getOutputStream());
             socketInput = new ObjectInputStream(socket.getInputStream());
-            readMessageProcess = startReadMessageProcess();
+            executorService = Executors.newSingleThreadExecutor();
+            this.startReadMessageProcess();
             connected = true;
             return true;
         } catch (IOException e) {
@@ -64,8 +66,9 @@ public class Network {
         return connected;
     }
 
-    private Thread startReadMessageProcess() {
-        Thread thread = new Thread(() -> {
+    private void startReadMessageProcess() {
+        Runnable runnable = () -> {
+            System.out.println(Thread.currentThread().getName());
             while (true) {
                 try {
                     if (Thread.currentThread().isInterrupted()) {
@@ -84,10 +87,8 @@ public class Network {
                     break;
                 }
             }
-        });
-        thread.setDaemon(true);
-        thread.start();
-        return thread;
+        };
+        executorService.execute(runnable);
     }
 
     private Command readCommand() throws IOException {
@@ -138,8 +139,9 @@ public class Network {
     public void close() {
         try {
             connected = false;
-            readMessageProcess.interrupt();
             socket.close();
+            executorService.shutdown();
+            System.out.println("Executor closed");
         } catch (IOException e) {
             e.printStackTrace();
         }
