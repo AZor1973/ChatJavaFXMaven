@@ -1,8 +1,12 @@
 package server.auth;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.sql.*;
 
 public class DatabaseService {
+    private static final Logger logger = LoggerFactory.getLogger(DatabaseService.class);
     public static final String GET_USERNAME_REQUEST = "SELECT username FROM users WHERE login = ? AND password = ?";
     private static final String DB_URL = "jdbc:sqlite:E:\\java\\ChatJavaFXMaven\\chat.db";
     public static final String CHANGE_USERNAME_REQUEST = "UPDATE users SET username = ? WHERE login = ? AND password = ?";
@@ -16,7 +20,7 @@ public class DatabaseService {
             getUsernameStatement = connection.prepareStatement(GET_USERNAME_REQUEST);
             changeUsernameStatement = connection.prepareStatement(CHANGE_USERNAME_REQUEST);
         } catch (SQLException e) {
-            System.out.println("Failed to database connection");
+            logger.error("Failed to database connection");
         }
     }
 
@@ -30,7 +34,7 @@ public class DatabaseService {
                 username = resultSet.getString("username");
             }
         } catch (SQLException e) {
-            System.out.println("Failed to database connection");
+            logger.error("Failed to database connection");
         }
         return username;
     }
@@ -42,7 +46,7 @@ public class DatabaseService {
             changeUsernameStatement.setString(3, password);
             changeUsernameStatement.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("Failed to database connection");
+            logger.error("Failed to database connection");
         }
     }
 
@@ -50,10 +54,10 @@ public class DatabaseService {
         try {
             if (connection != null) {
                 connection.close();
-                System.out.println("Connection with DB closed.");
+                logger.info("Connection with DB closed.");
             }
         } catch (SQLException e) {
-            System.out.println("Failed to close database connection");
+            logger.error("Failed to close database connection");
         }
     }
 }
