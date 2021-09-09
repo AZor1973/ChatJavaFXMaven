@@ -2,11 +2,9 @@ package ru.azor.client;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import ru.azor.client.controllers.AuthController;
 import ru.azor.client.controllers.ChatController;
@@ -64,11 +62,8 @@ public class ClientChat extends Application {
     private void initChatWindow() throws IOException {
         chatWindowLoader = new FXMLLoader();
         chatWindowLoader.setLocation(ClientChat.class.getResource(CHAT_WINDOW_FXML));
-
         Parent root = chatWindowLoader.load();
         this.primaryStage.setScene(new Scene(root));
-
-        setStageForSecondScreen(primaryStage);
     }
 
 
@@ -76,28 +71,12 @@ public class ClientChat extends Application {
         authLoader = new FXMLLoader();
         authLoader.setLocation(ClientChat.class.getResource(AUTH_DIALOG_FXML));
         Parent authDialogPanel = authLoader.load();
-
         authStage = new Stage();
         authStage.initOwner(primaryStage);
         authStage.initModality(Modality.WINDOW_MODAL);
         authStage.setScene(new Scene(authDialogPanel));
-    }
+        authStage.setOnCloseRequest(we -> primaryStage.close());
 
-
-    private void setStageForSecondScreen(Stage primaryStage) {
-        Screen secondScreen = getSecondScreen();
-        Rectangle2D bounds = secondScreen.getBounds();
-        primaryStage.setX(bounds.getMinX() + (bounds.getWidth() - 300) / 2);
-        primaryStage.setY(bounds.getMinY() + (bounds.getHeight() - 200) / 2);
-    }
-
-    private Screen getSecondScreen() {
-        for (Screen screen : Screen.getScreens()) {
-            if (!screen.equals(Screen.getPrimary())) {
-                return screen;
-            }
-        }
-        return Screen.getPrimary();
     }
 
     public static void main(String[] args) {

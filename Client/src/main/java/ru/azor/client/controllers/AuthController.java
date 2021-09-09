@@ -9,6 +9,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import ru.azor.client.ClientChat;
 import ru.azor.client.dialogs.Dialogs;
 import ru.azor.client.model.Network;
@@ -81,11 +82,19 @@ public class AuthController {
         getNetwork().removeReadMessageListener(readMessageListener);
     }
 
-    private void changeCursor(){
-        passwordField.setFocusTraversable(true);
-    }
-
     public void submitLogin() {
         passwordField.requestFocus();
+    }
+
+    public void goToPassword(KeyEvent keyEvent) {
+        if (keyEvent.getCode().isArrowKey()){
+            passwordField.requestFocus();
+        }
+    }
+
+    public void goToLogin(KeyEvent keyEvent) {
+        if (keyEvent.getCode().isArrowKey()){
+            loginField.requestFocus();
+        }
     }
 }
