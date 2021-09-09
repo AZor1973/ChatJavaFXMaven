@@ -6,6 +6,8 @@ import clientServer.commands.AuthCommandData;
 import clientServer.commands.PrivateMessageCommandData;
 import clientServer.commands.PublicMessageCommandData;
 import clientServer.commands.UpdateDatabaseCommandData;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -15,7 +17,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class ClientHandler {
-
+    private static final Logger logger = LoggerFactory.getLogger(ClientHandler.class);
     private final MyServer server;
     private final Socket clientSocket;
     private ObjectInputStream inputStream;
@@ -36,12 +38,12 @@ public class ClientHandler {
                 authentication();
                 readMessages();
             } catch (IOException e) {
-                System.err.println("Failed to process message from client");
+                logger.error("Failed to process message from client");
             } finally {
                 try {
                     closeConnection();
                 } catch (IOException e) {
-                    System.err.println("Failed to close connection");
+                    logger.error("Failed to close connection");
                 }
             }
         });
@@ -54,7 +56,7 @@ public class ClientHandler {
                 try {
                     closeConnection();
                 } catch (IOException e) {
-                    System.err.println("Failed to close connection");
+                    logger.error("Failed to close connection");
                 }
             }
         };
@@ -90,7 +92,7 @@ public class ClientHandler {
         try {
             command = (Command) inputStream.readObject();
         } catch (ClassNotFoundException e) {
-            System.err.println("Failed to read chatClientServser.Command class");
+            logger.error("Failed to read chatClientServser.Command class");
             e.printStackTrace();
         }
         return command;

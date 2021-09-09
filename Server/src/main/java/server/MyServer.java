@@ -1,6 +1,8 @@
 package server;
 
 import clientServer.Command;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import server.auth.DatabaseService;
 
 import java.io.IOException;
@@ -12,21 +14,21 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class MyServer {
-
+    private static final Logger logger = LoggerFactory.getLogger(MyServer.class);
     private final List<ClientHandler> clients = new ArrayList<>();
     private DatabaseService databaseService;
     private ExecutorService executorService;
 
     public void start(int port) {
         try (ServerSocket serverSocket = new ServerSocket(port)) {
-            System.out.println("Server has been started");
+            logger.info("Server has been started");
             databaseService = new DatabaseService();
             executorService = Executors.newCachedThreadPool();
             while (true) {
                 waitAndProcessNewClientConnection(serverSocket);
             }
         } catch (IOException e) {
-            System.err.println("Failed to bind port " + port);
+            logger.error("Failed to bind port " + port);
             e.printStackTrace();
         }
         finally {
@@ -36,9 +38,9 @@ public class MyServer {
     }
 
     private void waitAndProcessNewClientConnection(ServerSocket serverSocket) throws IOException {
-        System.out.println("Waiting for new client connection...");
+        logger.info("Waiting for new client connection...");
         Socket clientSocket = serverSocket.accept();
-        System.out.println("Client has been connected");
+        logger.info("Client has been connected");
         ClientHandler clientHandler = new ClientHandler(this, clientSocket);
         clientHandler.handle();
     }
