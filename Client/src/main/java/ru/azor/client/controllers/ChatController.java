@@ -6,7 +6,10 @@ import clientServer.commands.UpdateUsersListCommandData;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import ru.azor.client.ClientChat;
@@ -18,18 +21,14 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public class ChatController {
     private static final int LAST_HISTORY_ROWS_NUMBER = 100;
     @FXML
+    public Button reconnect;
+    @FXML
     private Button sendButton;
-    @FXML
-    private MenuItem reconnect;
-    @FXML
-    private MenuItem changeNick;
-    @FXML
-    private TextField newNick;
-
     @FXML
     private ListView<String> usersList;
     @FXML
@@ -94,7 +93,7 @@ public class ChatController {
 
     public void initMessageHandler() {
         Network.getInstance().addReadMessageListener(command -> {
-            if (historyService == null){
+            if (historyService == null) {
                 historyService = new HistoryService(login);
                 historyService.keepHistory();
                 chatHistory.setText(historyService.loadLastRows2(LAST_HISTORY_ROWS_NUMBER));
@@ -135,19 +134,24 @@ public class ChatController {
     }
 
     public void changeUsername() {
-        Network network = Network.getInstance();
-        String nick = newNick.getText();
-        try {
-            network.sendNewUsername(nick, login, password);
-        } catch (IOException e) {
-            Dialogs.NetworkError.SEND_MESSAGE.show();
-            e.printStackTrace();
+        TextInputDialog editDialog = new TextInputDialog("Введите новый ник");
+        editDialog.setTitle("Изменить юзернейм");
+        editDialog.setHeaderText("Введите новый юзернейм");
+        editDialog.setContentText("Username:");
+        Optional<String> nick = editDialog.showAndWait();
+        if (nick.isPresent()) {
+            try {
+                Network.getInstance().sendNewUsername(nick.get(), login, password);
+            } catch (IOException e) {
+                Dialogs.NetworkError.SEND_MESSAGE.show();
+                e.printStackTrace();
+            }
+            ClientChat.INSTANCE.getPrimaryStage().setTitle(nick.get());
         }
-        ClientChat.INSTANCE.getPrimaryStage().setTitle(nick);
     }
 
-    public void closeWriter(){
+    public void closeWriter() {
         if (historyService != null)
-        historyService.close();
+            historyService.close();
     }
 }

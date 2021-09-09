@@ -80,4 +80,12 @@ public class AuthController {
     public void close() {
         getNetwork().removeReadMessageListener(readMessageListener);
     }
+
+    private void changeCursor(){
+        passwordField.setFocusTraversable(true);
+    }
+
+    public void submitLogin() {
+        passwordField.requestFocus();
+    }
 }

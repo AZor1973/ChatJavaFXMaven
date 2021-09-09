@@ -9,19 +9,15 @@
     <SplitPane dividerPositions="0.3" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
             <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                <ListView fx:id="usersList" minHeight="-Infinity" minWidth="-Infinity" prefHeight="371.0" VBox.vgrow="ALWAYS" />
-            <MenuButton alignment="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="177.0" text="Меню">
-              <items>
-                <MenuItem fx:id="reconnect" mnemonicParsing="false" onAction="#reconnectToServer" text="Реконнект" />
-                <MenuItem fx:id="changeNick" mnemonicParsing="false" onAction="#changeUsername" text="Сменить ник">
-                     <graphic>
-                        <TextField fx:id="newNick" onAction="#changeUsername" promptText="Новый ник" />
-                     </graphic></MenuItem>
-              </items>
+            <Button mnemonicParsing="false" onAction="#changeUsername" prefHeight="30.0" prefWidth="176.0" text="Сменить ник">
                <VBox.margin>
                   <Insets left="10.0" right="10.0" />
-               </VBox.margin>
-            </MenuButton>
+               </VBox.margin></Button>
+                <ListView fx:id="usersList" minHeight="-Infinity" minWidth="-Infinity" prefHeight="303.0" prefWidth="248.0" VBox.vgrow="ALWAYS" />
+            <Button fx:id="reconnect" mnemonicParsing="false" onAction="#reconnectToServer" prefHeight="26.0" prefWidth="176.0" text="Реконнект">
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" />
+               </VBox.margin></Button>
             </VBox>
         </AnchorPane>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
@@ -39,7 +35,7 @@
                 <AnchorPane maxHeight="50.0" minHeight="30.0" minWidth="0.0" prefWidth="160.0">
                     <HBox prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                         <TextArea fx:id="messageTextArea" onKeyPressed="#sendTextAreaMessage" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                        <Button fx:id="sendButton" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#sendMessage" prefWidth="100.0" text="Send" HBox.hgrow="ALWAYS" />
+                        <Button fx:id="sendButton" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#sendMessage" prefWidth="100.0" text="Отправить" HBox.hgrow="ALWAYS" />
                     </HBox>
                 </AnchorPane>
             </SplitPane>
