@@ -76,11 +76,6 @@ public class ClientChat extends Application {
         authStage.initModality(Modality.WINDOW_MODAL);
         authStage.setScene(new Scene(authDialogPanel));
         authStage.setOnCloseRequest(we -> primaryStage.close());
-
-    }
-
-    public static void main(String[] args) {
-        Application.launch(args);
     }
 
     public Stage getChatStage() {
@@ -98,5 +93,9 @@ public class ClientChat extends Application {
     public void stop() {
         getChatController().closeWriter();
         Network.getInstance().close();
+    }
+
+    public static void main(String[] args) {
+        Application.launch(args);
     }
 }
