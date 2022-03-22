@@ -27,7 +27,6 @@ public class Network {
     private final List<ReadCommandListener> listeners = new CopyOnWriteArrayList<>();
     private boolean connected;
 
-
     public static Network getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new Network();
@@ -35,7 +34,6 @@ public class Network {
 
         return INSTANCE;
     }
-
 
     private Network(String host, int port) {
         this.host = host;
@@ -68,7 +66,6 @@ public class Network {
 
     private void startReadMessageProcess() {
         executorService.execute ( () -> {
-            System.out.println(Thread.currentThread().getName());
             while (true) {
                 try {
                     if (Thread.currentThread().isInterrupted()) {

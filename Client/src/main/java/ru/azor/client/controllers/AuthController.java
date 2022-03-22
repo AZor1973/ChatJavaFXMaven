@@ -24,7 +24,7 @@ public class AuthController {
     private TextField loginField;
     @FXML
     private PasswordField passwordField;
-    @FXML
+
     private ReadCommandListener readMessageListener;
 
     @FXML

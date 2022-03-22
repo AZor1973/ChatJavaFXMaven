@@ -33,7 +33,7 @@ public class ClientChat extends Application {
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
         initViews();
-        getChatStage().show();
+        getPrimaryStage().show();
         getAuthStage().show();
         getAuthController().initMessageHandler();
     }
@@ -76,10 +76,6 @@ public class ClientChat extends Application {
         authStage.initModality(Modality.WINDOW_MODAL);
         authStage.setScene(new Scene(authDialogPanel));
         authStage.setOnCloseRequest(we -> primaryStage.close());
-    }
-
-    public Stage getChatStage() {
-        return primaryStage;
     }
 
     public void switchToMainChatWindow(String username) {
