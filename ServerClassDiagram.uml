@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>E:/java/ChatJavaFXMaven/Server</OriginalElement>
+  <nodes>
+    <node x="123.5" y="459.1730103806228">server.MyServer</node>
+    <node x="-424.49480968858137" y="586.0536332179931">server.auth.User</node>
+    <node x="595.1038062283737" y="37.5">server.ClientHandler</node>
+    <node x="-366.9083044982699" y="37.5">server.auth.DatabaseService</node>
+    <node x="1043.6885813148792" y="750.5865051903114">server.ServerApp</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="server.MyServer" target="server.auth.DatabaseService" relationship="DEPENDENCY">
+      <point x="124.5" y="-174.5" />
+      <point x="497.0" y="279.0" />
+      <point x="692.5" y="279.0" />
+      <point x="692.5" y="259.0" />
+      <point x="12.5916955017301" y="259.0" />
+      <point x="126.5" y="119.5" />
+    </edge>
+    <edge source="server.MyServer" target="server.auth.DatabaseService" relationship="TO_ONE">
+      <point x="-124.5" y="-174.5" />
+      <point x="248.0" y="269.0" />
+      <point x="-240.4083044982699" y="269.0" />
+      <point x="-126.5" y="119.5" />
+    </edge>
+    <edge source="server.MyServer" target="server.ClientHandler" relationship="TO_MANY">
+      <point x="-124.5" y="-174.5" />
+      <point x="248.0" y="269.0" />
+      <point x="675.8538062283737" y="269.0" />
+      <point x="-80.75" y="82.0" />
+    </edge>
+    <edge source="server.ClientHandler" target="server.MyServer" relationship="TO_ONE">
+      <point x="-80.75" y="82.0" />
+      <point x="675.8538062283737" y="269.0" />
+      <point x="248.0" y="269.0" />
+      <point x="-124.5" y="-174.5" />
+    </edge>
+    <edge source="server.MyServer" target="server.ClientHandler" relationship="DEPENDENCY">
+      <point x="124.5" y="-174.5" />
+      <point x="497.0" y="279.0" />
+      <point x="692.5" y="279.0" />
+      <point x="692.5" y="259.0" />
+      <point x="837.3538062283737" y="259.0" />
+      <point x="80.75" y="82.0" />
+    </edge>
+    <edge source="server.ClientHandler" target="server.MyServer" relationship="DEPENDENCY">
+      <point x="80.75" y="82.0" />
+      <point x="837.3538062283737" y="259.0" />
+      <point x="692.5" y="259.0" />
+      <point x="692.5" y="279.0" />
+      <point x="497.0" y="279.0" />
+      <point x="124.5" y="-174.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.6077812828601472" showDependencies="true" x="296.98702422145334" y="465.5" />
+  <SelectedNodes>
+    <node>server.MyServer</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>packageLocal</VISIBILITY>
+</Diagram>
+
