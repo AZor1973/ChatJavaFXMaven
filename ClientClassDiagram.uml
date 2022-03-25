@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>E:/java/ChatJavaFXMaven/Client</OriginalElement>
+  <nodes>
+    <node x="264.0" y="1523.0">ru.azor.client.dialogs.Dialogs</node>
+    <node x="538.5" y="0.0">ru.azor.client.model.ReadCommandListener</node>
+    <node x="591.5" y="654.0">ru.azor.client.controllers.AuthController</node>
+    <node x="422.0" y="142.0">ru.azor.client.model.Network</node>
+    <node x="0.0" y="617.0">ru.azor.client.controllers.ChatController</node>
+    <node x="1126.5" y="0.0">ru.azor.client.dialogs.ChatDialog</node>
+    <node x="50.0" y="253.0">ru.azor.client.history.HistoryService</node>
+    <node x="0.0" y="1523.0">ru.azor.client.Launcher</node>
+    <node x="379.0" y="1054.0">ru.azor.client.ClientChat</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="ru.azor.client.controllers.ChatController" target="ru.azor.client.history.HistoryService" relationship="DEPENDENCY">
+      <point x="-92.5" y="-193.5" />
+      <point x="92.5" y="596.0" />
+      <point x="117.5" y="596.0" />
+      <point x="-67.5" y="100.5" />
+    </edge>
+    <edge source="ru.azor.client.controllers.AuthController" target="ru.azor.client.model.ReadCommandListener" relationship="DEPENDENCY">
+      <point x="-77.5" y="-156.5" />
+      <point x="669.0" y="596.0" />
+      <point x="579.0" y="596.0" />
+      <point x="579.0" y="586.0" />
+      <point x="411.5" y="586.0" />
+      <point x="411.5" y="121.0" />
+      <point x="655.125" y="121.0" />
+      <point x="655.125" y="111.0" />
+      <point x="642.5" y="111.0" />
+      <point x="-104.0" y="45.0" />
+    </edge>
+    <edge source="ru.azor.client.model.Network" target="ru.azor.client.model.ReadCommandListener" relationship="TO_MANY">
+      <point x="162.25" y="-211.5" />
+      <point x="908.75" y="121.0" />
+      <point x="837.875" y="121.0" />
+      <point x="837.875" y="111.0" />
+      <point x="850.5" y="111.0" />
+      <point x="104.0" y="45.0" />
+    </edge>
+    <edge source="ru.azor.client.ClientChat" target="ru.azor.client.controllers.ChatController" relationship="DEPENDENCY">
+      <point x="0.0" y="-212.0" />
+      <point x="566.5" y="1029.0" />
+      <point x="185.0" y="1029.0" />
+      <point x="0.0" y="193.5" />
+    </edge>
+    <edge source="ru.azor.client.controllers.AuthController" target="ru.azor.client.model.Network" relationship="DEPENDENCY">
+      <point x="-77.5" y="-156.5" />
+      <point x="669.0" y="596.0" />
+      <point x="579.0" y="596.0" />
+      <point x="579.0" y="586.0" />
+      <point x="746.5" y="586.0" />
+      <point x="0.0" y="211.5" />
+    </edge>
+    <edge source="ru.azor.client.controllers.ChatController" target="ru.azor.client.history.HistoryService" relationship="TO_ONE">
+      <point x="92.5" y="-193.5" />
+      <point x="277.5" y="596.0" />
+      <point x="252.5" y="596.0" />
+      <point x="67.5" y="100.5" />
+    </edge>
+    <edge source="ru.azor.client.controllers.AuthController" target="ru.azor.client.model.ReadCommandListener" relationship="TO_ONE">
+      <point x="77.5" y="-156.5" />
+      <point x="824.0" y="596.0" />
+      <point x="1081.5" y="596.0" />
+      <point x="1081.5" y="121.0" />
+      <point x="837.875" y="121.0" />
+      <point x="837.875" y="111.0" />
+      <point x="850.5" y="111.0" />
+      <point x="104.0" y="45.0" />
+    </edge>
+    <edge source="ru.azor.client.model.Network" target="ru.azor.client.model.ReadCommandListener" relationship="DEPENDENCY">
+      <point x="-162.25" y="-211.5" />
+      <point x="584.25" y="121.0" />
+      <point x="655.125" y="121.0" />
+      <point x="655.125" y="111.0" />
+      <point x="642.5" y="111.0" />
+      <point x="-104.0" y="45.0" />
+    </edge>
+    <edge source="ru.azor.client.ClientChat" target="ru.azor.client.controllers.AuthController" relationship="DEPENDENCY">
+      <point x="0.0" y="-212.0" />
+      <point x="566.5" y="1029.0" />
+      <point x="746.5" y="1029.0" />
+      <point x="0.0" y="156.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.353949785670545" showDependencies="true" x="784.0" y="806.5" />
+  <SelectedNodes>
+    <node>ru.azor.client.model.ReadCommandListener</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>packageLocal</VISIBILITY>
+</Diagram>
+
