@@ -41,7 +41,10 @@ public class MyServer {
         logger.info("Waiting for new client connection...");
         Socket clientSocket = serverSocket.accept();
         logger.info("Client has been connected");
-        ClientHandler clientHandler = new ClientHandler(this, clientSocket);
+        ClientHandler clientHandler = ClientHandler.newBuilder()
+                .withServer(this)
+                .withClientSocket(clientSocket)
+                .build();
         clientHandler.handle();
     }
 

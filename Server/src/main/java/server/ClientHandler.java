@@ -24,9 +24,42 @@ public class ClientHandler {
     private ObjectOutputStream outputStream;
     private String username;
 
-    public ClientHandler(MyServer server, Socket clientSocket) {
-        this.server = server;
-        this.clientSocket = clientSocket;
+    private ClientHandler(Builder builder) {
+        server = builder.server;
+        clientSocket = builder.clientSocket;
+        inputStream = builder.inputStream;
+        outputStream = builder.outputStream;
+        username = builder.username;
+    }
+
+    public static Builder newBuilder() {
+        return new Builder();
+    }
+
+    public static Builder newBuilder(ClientHandler copy) {
+        Builder builder = new Builder();
+        builder.server = copy.getServer();
+        builder.clientSocket = copy.getClientSocket();
+        builder.inputStream = copy.getInputStream();
+        builder.outputStream = copy.getOutputStream();
+        builder.username = copy.getUsername();
+        return builder;
+    }
+
+    public MyServer getServer() {
+        return server;
+    }
+
+    public Socket getClientSocket() {
+        return clientSocket;
+    }
+
+    public ObjectInputStream getInputStream() {
+        return inputStream;
+    }
+
+    public ObjectOutputStream getOutputStream() {
+        return outputStream;
     }
 
     public void handle() throws IOException {
@@ -148,5 +181,45 @@ public class ClientHandler {
 
     public String getUsername() {
         return username;
+    }
+
+    public static final class Builder {
+        private MyServer server;
+        private Socket clientSocket;
+        private ObjectInputStream inputStream;
+        private ObjectOutputStream outputStream;
+        private String username;
+
+        private Builder() {
+        }
+
+        public Builder withServer(MyServer val) {
+            server = val;
+            return this;
+        }
+
+        public Builder withClientSocket(Socket val) {
+            clientSocket = val;
+            return this;
+        }
+
+        public Builder withInputStream(ObjectInputStream val) {
+            inputStream = val;
+            return this;
+        }
+
+        public Builder withOutputStream(ObjectOutputStream val) {
+            outputStream = val;
+            return this;
+        }
+
+        public Builder withUsername(String val) {
+            username = val;
+            return this;
+        }
+
+        public ClientHandler build() {
+            return new ClientHandler(this);
+        }
     }
 }
