@@ -1,8 +1,6 @@
 package ru.azor.client.controllers;
 
 import clientServer.CommandType;
-import clientServer.commands.ClientMessageCommandData;
-import clientServer.commands.UpdateUsersListCommandData;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
