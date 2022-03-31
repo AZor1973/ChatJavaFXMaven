@@ -8,14 +8,22 @@ public class User {
     private final String password;
     private final String username;
 
-    public User(String login, String password, String username) {
-        this.login = login;
-        this.password = password;
-        this.username = username;
+    private User(Builder builder) {
+        login = builder.login;
+        password = builder.password;
+        username = builder.username;
     }
 
-    public User(String login, String password) {
-        this(login, password, null);
+    public static Builder newBuilder() {
+        return new Builder();
+    }
+
+    public static Builder newBuilder(User copy) {
+        Builder builder = new Builder();
+        builder.login = copy.getLogin();
+        builder.password = copy.getPassword();
+        builder.username = copy.getUsername();
+        return builder;
     }
 
     public String getLogin() {
@@ -41,5 +49,33 @@ public class User {
     @Override
     public int hashCode() {
         return Objects.hash(login, password);
+    }
+
+    public static final class Builder {
+        private String login;
+        private String password;
+        private String username;
+
+        private Builder() {
+        }
+
+        public Builder withLogin(String val) {
+            login = val;
+            return this;
+        }
+
+        public Builder withPassword(String val) {
+            password = val;
+            return this;
+        }
+
+        public Builder withUsername(String val) {
+            username = val;
+            return this;
+        }
+
+        public User build() {
+            return new User(this);
+        }
     }
 }
