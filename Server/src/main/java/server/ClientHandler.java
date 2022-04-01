@@ -1,6 +1,11 @@
 package server;
 
+import clientServer.Command;
 import clientServer.CommandType;
+import clientServer.commands.AuthCommandData;
+import clientServer.commands.PrivateMessageCommandData;
+import clientServer.commands.PublicMessageCommandData;
+import clientServer.commands.UpdateDatabaseCommandData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

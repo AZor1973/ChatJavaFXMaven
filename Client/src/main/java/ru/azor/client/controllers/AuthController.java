@@ -1,6 +1,8 @@
 package ru.azor.client.controllers;
 
 import clientServer.CommandType;
+import clientServer.commands.AuthOkCommandData;
+import clientServer.commands.ErrorCommandData;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;

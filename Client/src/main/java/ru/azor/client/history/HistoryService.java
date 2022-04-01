@@ -10,7 +10,7 @@ import java.util.List;
 
 public class HistoryService {
 
-    private static final String FILENAME = "./history/history_%s.txt";
+    private static final String FILENAME = "./client/history/history_%s.txt";
     private final String login;
     private PrintWriter printWriter;
     private File fileHistory;
